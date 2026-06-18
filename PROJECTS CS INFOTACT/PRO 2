@@ -1,0 +1,21 @@
+import re
+
+note = """
+Patient Name: John Smith
+Date of Birth: 12/05/1985
+Phone: 555-123-4567
+Email: john.smith@email.com
+SSN: 123-45-6789
+Diagnosis: Patient has Parkinson's disease and high blood pressure.
+"""
+
+print("ORIGINAL:")
+print(note)
+
+note = re.sub(r'\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b', '[PHONE]', note)
+note = re.sub(r'\S+@\S+\.\S+', '[EMAIL]', note)
+note = re.sub(r'\b\d{1,2}/\d{1,2}/\d{2,4}\b', '[DATE]', note)
+note = re.sub(r'\b\d{3}-\d{2}-\d{4}\b', '[SSN]', note)
+
+print("REDACTED:")
+print(note)
