@@ -2,6 +2,7 @@ import re
 
 note = """
 Patient Name: John Smith
+Doctor Name: Dr. Adams
 Date of Birth: 12/05/1985
 Phone: 555-123-4567
 Email: john.smith@email.com
@@ -16,6 +17,8 @@ note = re.sub(r'\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b', '[PHONE]', note)
 note = re.sub(r'\S+@\S+\.\S+', '[EMAIL]', note)
 note = re.sub(r'\b\d{1,2}/\d{1,2}/\d{2,4}\b', '[DATE]', note)
 note = re.sub(r'\b\d{3}-\d{2}-\d{4}\b', '[SSN]', note)
+note = re.sub(r'Patient Name:\s[A-Z][a-z]+\s[A-Z][a-z]+', 'Patient Name: [NAME]', note)
+note = re.sub(r'Dr\.\s[A-Z][a-z]+', 'Dr. [DOCTOR]', note)
 
 print("REDACTED:")
 print(note)
