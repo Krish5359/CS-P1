@@ -1,27 +1,43 @@
 import re
 
-note = """
+def redact(note):
+    note = re.sub(r'\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b', '[PHONE]', note)
+    note = re.sub(r'\S+@\S+\.\S+', '[EMAIL]', note)
+    note = re.sub(r'\b\d{1,2}/\d{1,2}/\d{2,4}\b', '[DATE]', note)
+    note = re.sub(r'\b\d{3}-\d{2}-\d{4}\b', '[SSN]', note)
+    note = re.sub(r'Patient Name:\s[A-Z][a-z]+\s[A-Z][a-z]+', 'Patient Name: [PATIENT_1]', note)
+    note = re.sub(r'Dr\.\s[A-Z][a-z]+', 'Dr. [DOCTOR_1]', note)
+    note = re.sub(r'MRN-\d+', '[MEDICAL_RECORD]', note)
+    return note
+
+note1 = """
 Patient Name: John Smith
 Doctor Name: Dr. Adams
-Hospital: City General Hospital
 Date of Birth: 12/05/1985
 Phone: 555-123-4567
 Email: john.smith@email.com
 SSN: 123-45-6789
-Medical Record: MRN-789456
-Diagnosis: Patient has Parkinson's disease and high blood pressure.
+MRN: MRN-789456
+Diagnosis: Patient has Parkinson's disease.
 """
 
-print("ORIGINAL:")
-print(note)
+note2 = """
+Patient Name: Sarah Johnson
+Doctor Name: Dr. Williams
+Date of Birth: 05/09/1990
+Phone: 555-987-6543
+Email: sarah.j@email.com
+SSN: 987-65-4321
+MRN: MRN-123789
+Diagnosis: Patient has high blood pressure.
+"""
 
-note = re.sub(r'\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b', '[PHONE]', note)
-note = re.sub(r'\S+@\S+\.\S+', '[EMAIL]', note)
-note = re.sub(r'\b\d{1,2}/\d{1,2}/\d{2,4}\b', '[DATE]', note)
-note = re.sub(r'\b\d{3}-\d{2}-\d{4}\b', '[SSN]', note)
-note = re.sub(r'Patient Name:\s[A-Z][a-z]+\s[A-Z][a-z]+', 'Patient Name: [PATIENT_1]', note)
-note = re.sub(r'Dr\.\s[A-Z][a-z]+', 'Dr. [DOCTOR_1]', note)
-note = re.sub(r'MRN-\d+', '[MEDICAL_RECORD]', note)
+print("PATIENT 1 ORIGINAL:")
+print(note1)
+print("PATIENT 1 REDACTED:")
+print(redact(note1))
 
-print("REDACTED:")
-print(note)
+print("PATIENT 2 ORIGINAL:")
+print(note2)
+print("PATIENT 2 REDACTED:")
+print(redact(note2))
