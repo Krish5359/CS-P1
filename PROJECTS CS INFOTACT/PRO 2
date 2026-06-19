@@ -8,6 +8,8 @@ def redact(note):
     note = re.sub(r'Patient Name:\s[A-Z][a-z]+\s[A-Z][a-z]+', 'Patient Name: [PATIENT_1]', note)
     note = re.sub(r'Dr\.\s[A-Z][a-z]+', 'Dr. [DOCTOR_1]', note)
     note = re.sub(r'MRN-\d+', '[MEDICAL_RECORD]', note)
+    note = re.sub(r'Address:.*', 'Address: [ADDRESS]', note)
+    note = re.sub(r'\b\d{5}\b', '[ZIPCODE]', note)
     return note
 
 note1 = """
@@ -18,6 +20,8 @@ Phone: 555-123-4567
 Email: john.smith@email.com
 SSN: 123-45-6789
 MRN: MRN-789456
+Address: 123 Main Street, New York
+Zipcode: 10001
 Diagnosis: Patient has Parkinson's disease.
 """
 
@@ -29,15 +33,13 @@ Phone: 555-987-6543
 Email: sarah.j@email.com
 SSN: 987-65-4321
 MRN: MRN-123789
+Address: 456 Oak Avenue, Los Angeles
+Zipcode: 90001
 Diagnosis: Patient has high blood pressure.
 """
 
-print("PATIENT 1 ORIGINAL:")
-print(note1)
 print("PATIENT 1 REDACTED:")
 print(redact(note1))
 
-print("PATIENT 2 ORIGINAL:")
-print(note2)
 print("PATIENT 2 REDACTED:")
 print(redact(note2))
