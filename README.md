@@ -8,7 +8,22 @@ patient information from clinical notes.
 - Hides emails
 - Hides SSN
 - Hides dates
+- Hides patient names
+- Hides doctor names
+- Hides medical record numbers
+- Hides addresses and zipcodes
+
+## Week 1 - Completed
+- Basic regex redaction
+- Phone, email, SSN, date hiding
+
+## Week 2 - Completed
+- Added patient name redaction
+- Added doctor name redaction
+- Added medical record number redaction
+- Added address and zipcode redaction
+- Added support for multiple patients
 
 ## Made by
 Krish Kanani
-Internship Project
+Internship Project - CS Infotact
