@@ -12,3 +12,17 @@ def get_fake_name(real_name):
 
 print(get_fake_name("John Smith"))
 print(get_fake_name("Dr. Adams"))
+
+import random
+
+first_names = ["James", "Emily", "Robert", "Sophia", "William"]
+last_names = ["Brown", "Davis", "Wilson", "Taylor", "Anderson"]
+
+def generate_fake_name():
+    first = random.choice(first_names)
+    last = random.choice(last_names)
+    return first + " " + last
+
+print(generate_fake_name())
+print(generate_fake_name())
+print(generate_fake_name())
