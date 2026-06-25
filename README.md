@@ -24,6 +24,12 @@ patient information from clinical notes.
 - Added address and zipcode redaction
 - Added support for multiple patients
 
+## Week 3 - In Progress
+- Created pseudonymizer.py file
+- Added fake name generator
+- Added patient name replacement
+- Added doctor name replacement
+
 ## Made by
 Krish Kanani
 Internship Project - CS Infotact
