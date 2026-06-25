@@ -26,3 +26,30 @@ def generate_fake_name():
 print(generate_fake_name())
 print(generate_fake_name())
 print(generate_fake_name())
+
+def replace_patient_name(note, real_name):
+    fake = generate_fake_name()
+    note = note.replace(real_name, fake)
+    return note
+
+note = "Patient Name: John Smith has Parkinson's disease."
+
+print("ORIGINAL:")
+print(note)
+
+print("PSEUDONYMIZED:")
+print(replace_patient_name(note, "John Smith"))
+doctor_names = ["Dr. Cooper", "Dr. Mitchell", "Dr. Harris", "Dr. Parker"]
+
+def replace_doctor_name(note, real_doctor):
+    fake_doctor = random.choice(doctor_names)
+    note = note.replace(real_doctor, fake_doctor)
+    return note
+
+note2 = "Doctor Name: Dr. Adams treated the patient today."
+
+print("ORIGINAL:")
+print(note2)
+
+print("PSEUDONYMIZED:")
+print(replace_doctor_name(note2, "Dr. Adams"))
