@@ -53,3 +53,16 @@ print(note2)
 
 print("PSEUDONYMIZED:")
 print(replace_doctor_name(note2, "Dr. Adams"))
+
+note3 = "Patient Name: John Smith has high blood pressure."
+note4 = "Patient Name: Sarah Johnson has diabetes."
+
+print("PATIENT 1 ORIGINAL:")
+print(note3)
+print("PATIENT 1 PSEUDONYMIZED:")
+print(replace_patient_name(note3, "John Smith"))
+
+print("PATIENT 2 ORIGINAL:")
+print(note4)
+print("PATIENT 2 PSEUDONYMIZED:")
+print(replace_patient_name(note4, "Sarah Johnson"))
