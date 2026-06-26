@@ -66,3 +66,18 @@ print("PATIENT 2 ORIGINAL:")
 print(note4)
 print("PATIENT 2 PSEUDONYMIZED:")
 print(replace_patient_name(note4, "Sarah Johnson"))
+
+name_mapping = {}
+
+def store_mapping(real_name):
+    fake = generate_fake_name()
+    name_mapping[real_name] = fake
+    return fake
+
+store_mapping("John Smith")
+store_mapping("Sarah Johnson")
+store_mapping("Dr. Adams")
+
+print("NAME MAPPINGS:")
+for real, fake in name_mapping.items():
+    print(real, "->", fake)
