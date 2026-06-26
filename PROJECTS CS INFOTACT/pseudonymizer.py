@@ -81,3 +81,16 @@ store_mapping("Dr. Adams")
 print("NAME MAPPINGS:")
 for real, fake in name_mapping.items():
     print(real, "->", fake)
+
+    def reverse_mapping(note):
+    for real, fake in name_mapping.items():
+        note = note.replace(fake, real)
+    return note
+
+pseudonymized_note = "Patient James Brown has Parkinson's disease."
+
+print("PSEUDONYMIZED:")
+print(pseudonymized_note)
+
+print("RESTORED:")
+print(reverse_mapping(pseudonymized_note))
