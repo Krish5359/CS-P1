@@ -116,3 +116,17 @@ print(pseudonymized)
 
 print("RESTORED:")
 print(reverse_mapping(pseudonymized))
+
+streets = ["Oak Street", "Maple Avenue", "Pine Road", "Elm Boulevard"]
+cities = ["Springfield", "Riverside", "Fairview", "Georgetown"]
+
+def generate_fake_address():
+    number = random.randint(100, 999)
+    street = random.choice(streets)
+    city = random.choice(cities)
+    return str(number) + " " + street + ", " + city
+
+print("FAKE ADDRESS:")
+print(generate_fake_address())
+print(generate_fake_address())
+print(generate_fake_address())
