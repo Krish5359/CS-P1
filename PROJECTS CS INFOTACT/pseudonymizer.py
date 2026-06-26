@@ -94,3 +94,25 @@ print(pseudonymized_note)
 
 print("RESTORED:")
 print(reverse_mapping(pseudonymized_note))
+
+real_note = """
+Patient Name: John Smith
+Doctor Name: Dr. Adams
+Diagnosis: Patient has Parkinson's disease.
+"""
+
+store_mapping("John Smith")
+store_mapping("Dr. Adams")
+
+pseudonymized = real_note
+for real, fake in name_mapping.items():
+    pseudonymized = pseudonymized.replace(real, fake)
+
+print("ORIGINAL:")
+print(real_note)
+
+print("PSEUDONYMIZED:")
+print(pseudonymized)
+
+print("RESTORED:")
+print(reverse_mapping(pseudonymized))
