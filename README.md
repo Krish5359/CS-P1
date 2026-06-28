@@ -24,11 +24,17 @@ patient information from clinical notes.
 - Added address and zipcode redaction
 - Added support for multiple patients
 
-## Week 3 - In Progress
+## Week 3 - Completed
 - Created pseudonymizer.py file
 - Added fake name generator
-- Added patient name replacement
-- Added doctor name replacement
+- Added fake doctor name generator
+- Added fake address generator
+- Added fake phone generator
+- Added fake email generator
+- Added name mapping dictionary
+- Added reverse mapping function
+- Combined redactor and pseudonymizer
+- Tested with multiple patients
 
 ## Made by
 Krish Kanani
