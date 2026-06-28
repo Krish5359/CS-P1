@@ -73,3 +73,32 @@ print(full_note)
 
 print("FULLY REDACTED:")
 print(full_pipeline(full_note))
+note_a = """
+Patient Name: Sarah Johnson
+Doctor Name: Dr. Williams
+Date of Birth: 05/09/1990
+Phone: 555-987-6543
+Email: sarah.j@email.com
+SSN: 987-65-4321
+MRN: MRN-123789
+Address: 456 Oak Avenue Los Angeles
+Diagnosis: Patient has high blood pressure.
+"""
+
+note_b = """
+Patient Name: Robert Davis
+Doctor Name: Dr. Harris
+Date of Birth: 08/03/1975
+Phone: 555-456-7890
+Email: robert.d@email.com
+SSN: 456-78-9012
+MRN: MRN-456123
+Address: 789 Pine Road Chicago
+Diagnosis: Patient has diabetes and anxiety.
+"""
+
+print("TEST CASE 1 REDACTED:")
+print(full_pipeline(note_a))
+
+print("TEST CASE 2 REDACTED:")
+print(full_pipeline(note_b))
