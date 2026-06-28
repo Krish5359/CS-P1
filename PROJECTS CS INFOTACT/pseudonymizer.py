@@ -130,3 +130,14 @@ print("FAKE ADDRESS:")
 print(generate_fake_address())
 print(generate_fake_address())
 print(generate_fake_address())
+
+def generate_fake_phone():
+    part1 = random.randint(100, 999)
+    part2 = random.randint(100, 999)
+    part3 = random.randint(1000, 9999)
+    return str(part1) + "-" + str(part2) + "-" + str(part3)
+
+print("FAKE PHONE:")
+print(generate_fake_phone())
+print(generate_fake_phone())
+print(generate_fake_phone())
