@@ -131,6 +131,19 @@ print(generate_fake_address())
 print(generate_fake_address())
 print(generate_fake_address())
 
+domains = ["gmail.com", "yahoo.com", "outlook.com", "hotmail.com"]
+
+def generate_fake_email():
+    first = random.choice(first_names).lower()
+    last = random.choice(last_names).lower()
+    domain = random.choice(domains)
+    return first + "." + last + "@" + domain
+
+print("FAKE EMAIL:")
+print(generate_fake_email())
+print(generate_fake_email())
+print(generate_fake_email())
+
 def generate_fake_phone():
     part1 = random.randint(100, 999)
     part2 = random.randint(100, 999)
