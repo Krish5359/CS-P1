@@ -43,3 +43,33 @@ print(redact(note1))
 
 print("PATIENT 2 REDACTED:")
 print(redact(note2))
+
+def full_pipeline(note):
+    note = re.sub(r'\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b', '[PHONE]', note)
+    note = re.sub(r'\S+@\S+\.\S+', '[EMAIL]', note)
+    note = re.sub(r'\b\d{1,2}/\d{1,2}/\d{2,4}\b', '[DATE]', note)
+    note = re.sub(r'\b\d{3}-\d{2}-\d{4}\b', '[SSN]', note)
+    note = re.sub(r'MRN-\d+', '[MEDICAL_RECORD]', note)
+    note = re.sub(r'Address:.*', 'Address: [ADDRESS]', note)
+    note = re.sub(r'\b\d{5}\b', '[ZIPCODE]', note)
+    note = replace_patient_name(note, "John Smith")
+    note = replace_doctor_name(note, "Dr. Adams")
+    return note
+
+full_note = """
+Patient Name: John Smith
+Doctor Name: Dr. Adams
+Date of Birth: 12/05/1985
+Phone: 555-123-4567
+Email: john.smith@email.com
+SSN: 123-45-6789
+MRN: MRN-789456
+Address: 123 Main Street New York
+Diagnosis: Patient has Parkinson's disease.
+"""
+
+print("ORIGINAL:")
+print(full_note)
+
+print("FULLY REDACTED:")
+print(full_pipeline(full_note))
