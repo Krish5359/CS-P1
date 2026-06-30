@@ -32,16 +32,15 @@ def redact(note):
     note = re.sub(r'\b\d{5}\b', '[ZIPCODE]', note)
     return note
 
-def full_pipeline(note):
+def full_pipeline(note, patient_name, doctor_name):
+    note = replace_patient_name(note, patient_name)
+    note = replace_doctor_name(note, doctor_name)
     note = re.sub(r'\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b', '[PHONE]', note)
     note = re.sub(r'\S+@\S+\.\S+', '[EMAIL]', note)
     note = re.sub(r'\b\d{1,2}/\d{1,2}/\d{2,4}\b', '[DATE]', note)
     note = re.sub(r'\b\d{3}-\d{2}-\d{4}\b', '[SSN]', note)
     note = re.sub(r'MRN-\d+', '[MEDICAL_RECORD]', note)
     note = re.sub(r'Address:.*', 'Address: [ADDRESS]', note)
-    note = re.sub(r'\b\d{5}\b', '[ZIPCODE]', note)
-    note = replace_patient_name(note, "John Smith")
-    note = replace_doctor_name(note, "Dr. Adams")
     return note
 
 note1 = """
@@ -92,7 +91,7 @@ print("ORIGINAL:")
 print(full_note)
 
 print("FULLY REDACTED:")
-print(full_pipeline(full_note))
+print(full_pipeline(full_note, "John Smith", "Dr. Adams"))
 
 note_a = """
 Patient Name: Sarah Johnson
@@ -119,7 +118,7 @@ Diagnosis: Patient has diabetes and anxiety.
 """
 
 print("TEST CASE 1 REDACTED:")
-print(full_pipeline(note_a))
+print(full_pipeline(note_a, "Sarah Johnson", "Dr. Williams"))
 
 print("TEST CASE 2 REDACTED:")
-print(full_pipeline(note_b))
+print(full_pipeline(note_b, "Robert Davis", "Dr. Harris"))
