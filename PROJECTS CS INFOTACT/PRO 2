@@ -122,3 +122,14 @@ print(full_pipeline(note_a, "Sarah Johnson", "Dr. Williams"))
 
 print("TEST CASE 2 REDACTED:")
 print(full_pipeline(note_b, "Robert Davis", "Dr. Harris"))
+
+start = time.time()
+
+redact(note1)
+redact(note2)
+full_pipeline(full_note, "John Smith", "Dr. Adams")
+
+end = time.time()
+
+print("TIME TAKEN:")
+print(str(round((end - start) * 1000, 2)) + " milliseconds")
