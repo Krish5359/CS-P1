@@ -133,3 +133,18 @@ end = time.time()
 
 print("TIME TAKEN:")
 print(str(round((end - start) * 1000, 2)) + " milliseconds")
+
+def safe_redact(note):
+    try:
+        if note is None:
+            return "Error: No note provided"
+        if len(note) == 0:
+            return "Error: Note is empty"
+        return redact(note)
+    except Exception as e:
+        return "Error: " + str(e)
+
+print("ERROR HANDLING TESTS:")
+print(safe_redact(None))
+print(safe_redact(""))
+print(safe_redact("Patient Name: John Smith Phone: 555-123-4567"))
