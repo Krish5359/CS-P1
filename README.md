@@ -36,6 +36,18 @@ patient information from clinical notes.
 - Combined redactor and pseudonymizer
 - Tested with multiple patients
 
+## Week 4 - In Progress
+- Created final report file
+- Added pipeline timing and speed measurement
+- Added HIPAA Safe Harbor 18 identifiers list
+- Added speed test results to report
+
+## Project Files
+- PRO 2.py - Main redaction pipeline
+- pseudonymizer.py - Fake name generator and mapper
+- report.md - Final HIPAA compliance report
+- README.md - Project documentation 
+
 ## Made by
 Krish Kanani
 Internship Project - CS Infotact
