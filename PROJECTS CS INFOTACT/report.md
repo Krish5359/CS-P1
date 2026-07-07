@@ -64,3 +64,23 @@ This is fast enough for real-time clinical use.
 ### Conclusion
 The pipeline is fast enough to be used in real healthcare 
 systems without causing delays for doctors or clinical staff.
+
+## Risk Assessment
+
+### What is Re-identification Risk?
+Re-identification risk means someone could use the 
+redacted data to figure out who the real patient is.
+
+### Risks in Our Pipeline
+| Risk | Level | How We Handle It |
+|---|---|---|
+| Name not detected | Low | We use both Regex and fake name replacement |
+| Fake name matches real person | Low | Names are randomly generated |
+| Mapping vault gets leaked | Medium | Mapping is stored locally only |
+| Partial data reveals identity | Low | We redact all 7 key identifiers |
+
+### How We Reduce Risk
+- Real names are never sent to external AI
+- Fake names are randomly generated each time
+- Name mappings are stored locally and never shared
+- Pipeline processes data in milliseconds before sending
