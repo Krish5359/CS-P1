@@ -84,3 +84,31 @@ redacted data to figure out who the real patient is.
 - Fake names are randomly generated each time
 - Name mappings are stored locally and never shared
 - Pipeline processes data in milliseconds before sending
+
+## HIPAA Compliance
+
+### What is HIPAA?
+HIPAA (Health Insurance Portability and Accountability Act) 
+is a US law that protects patient privacy. It says hospitals 
+and healthcare organizations must protect patient data at all times.
+
+### What is Safe Harbor Method?
+Safe Harbor is a method defined by HIPAA. It says if you 
+remove all 18 specific identifiers from patient data, 
+the data is considered safe to use.
+
+### How Our Pipeline Follows HIPAA Safe Harbor
+| Requirement | Our Solution |
+|---|---|
+| Remove patient names | ✅ Replaced with fake names |
+| Remove phone numbers | ✅ Replaced with [PHONE] |
+| Remove email addresses | ✅ Replaced with [EMAIL] |
+| Remove SSN | ✅ Replaced with [SSN] |
+| Remove dates | ✅ Replaced with [DATE] |
+| Remove addresses | ✅ Replaced with [ADDRESS] |
+| Remove medical record numbers | ✅ Replaced with [MEDICAL_RECORD] |
+
+### Conclusion
+Our pipeline successfully removes 7 out of 18 HIPAA 
+Safe Harbor identifiers. This makes the data significantly 
+safer to send to external AI systems.
