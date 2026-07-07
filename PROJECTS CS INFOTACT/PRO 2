@@ -167,3 +167,33 @@ Email: john.smith@email.com
 
 print("LOGGING TEST:")
 print(redact_with_log(test_note))
+
+note_c = """
+Patient Name: Michael Brown
+Doctor Name: Dr. Thompson
+Date of Birth: 03/15/1978
+Phone: 555-321-9876
+Email: michael.b@email.com
+SSN: 321-54-9876
+MRN: MRN-654321
+Address: 321 Elm Boulevard Chicago
+Diagnosis: Patient has anxiety and depression.
+"""
+
+note_d = """
+Patient Name: Emily Wilson
+Doctor Name: Dr. Parker
+Date of Birth: 07/22/1995
+Phone: 555-654-3210
+Email: emily.w@email.com
+SSN: 654-32-1098
+MRN: MRN-321654
+Address: 654 Maple Avenue Boston
+Diagnosis: Patient has asthma and allergies.
+"""
+
+print("TEST CASE 3 REDACTED:")
+print(full_pipeline(note_c, "Michael Brown", "Dr. Thompson"))
+
+print("TEST CASE 4 REDACTED:")
+print(full_pipeline(note_d, "Emily Wilson", "Dr. Parker"))
