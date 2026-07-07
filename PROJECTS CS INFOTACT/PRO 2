@@ -148,3 +148,22 @@ print("ERROR HANDLING TESTS:")
 print(safe_redact(None))
 print(safe_redact(""))
 print(safe_redact("Patient Name: John Smith Phone: 555-123-4567"))
+
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
+def redact_with_log(note):
+    logging.info("Starting redaction...")
+    result = redact(note)
+    logging.info("Redaction completed successfully!")
+    return result
+
+test_note = """
+Patient Name: John Smith
+Phone: 555-123-4567
+Email: john.smith@email.com
+"""
+
+print("LOGGING TEST:")
+print(redact_with_log(test_note))
