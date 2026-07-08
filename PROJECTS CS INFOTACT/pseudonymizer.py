@@ -64,34 +64,11 @@ def generate_fake_email():
     domain = random.choice(domains)
     return first + "." + last + "@" + domain
 
-print(get_fake_name("John Smith"))
-print(get_fake_name("Dr. Adams"))
-
-print(generate_fake_name())
-print(generate_fake_name())
-
-note = "Patient Name: John Smith has Parkinson's disease."
-print("ORIGINAL:") 
-print(note)
-print("PSEUDONYMIZED:")
-print(replace_patient_name(note, "John Smith"))
-
-note2 = "Doctor Name: Dr. Adams treated the patient today."
-print("ORIGINAL:")
-print(note2)
-print("PSEUDONYMIZED:")
-print(replace_doctor_name(note2, "Dr. Adams"))
-
-note3 = "Patient Name: John Smith has high blood pressure."
-note4 = "Patient Name: Sarah Johnson has diabetes."
-print("PATIENT 1 PSEUDONYMIZED:")
-print(replace_patient_name(note3, "John Smith"))
-print("PATIENT 2 PSEUDONYMIZED:")
-print(replace_patient_name(note4, "Sarah Johnson"))
-
 store_mapping("John Smith")
 store_mapping("Sarah Johnson")
 store_mapping("Dr. Adams")
+store_mapping("Dr. Williams")
+
 print("NAME MAPPINGS:")
 for real, fake in name_mapping.items():
     print(real, "->", fake)
@@ -110,9 +87,6 @@ Patient Name: John Smith
 Doctor Name: Dr. Adams
 Diagnosis: Patient has Parkinson's disease.
 """
-
-store_mapping("John Smith")
-store_mapping("Dr. Adams")
 
 pseudonymized = real_note
 for real, fake in name_mapping.items():
