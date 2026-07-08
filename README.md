@@ -1,17 +1,41 @@
-# Project 2 - PHI Redaction Pipeline
+# Project 2 - PHI/PII Redaction Pipeline
+Internship Project - CS Infotact Solutions
 
-This project automatically detects and hides sensitive 
-patient information from clinical notes.
+## Project Overview
+An automated redaction pipeline that detects and removes 
+sensitive patient information from clinical notes before 
+sending to external AI systems.
 
-## What it does
-- Hides phone numbers
-- Hides emails
-- Hides SSN
-- Hides dates
-- Hides patient names
-- Hides doctor names
-- Hides medical record numbers
-- Hides addresses and zipcodes
+## Problem Statement
+Healthcare organizations face strict privacy laws like HIPAA.
+Sending unredacted patient data to external AI APIs is illegal.
+This pipeline solves that problem by automatically cleaning 
+the data first.
+
+## Solution
+We built a two step pipeline:
+- Step 1: Detect and hide sensitive data using Regex patterns
+- Step 2: Replace real names with fake names using Pseudonymization
+
+## Project Files
+- PRO 2.py - Main redaction pipeline with error handling and logging
+- pseudonymizer.py - Fake name generator and reverse mapping
+- report.md - Final HIPAA compliance report
+- README.md - Project documentation
+
+## What We Redact
+- Patient Names
+- Doctor Names
+- Phone Numbers
+- Email Addresses
+- Social Security Numbers (SSN)
+- Dates of Birth
+- Medical Record Numbers
+- Addresses and Zipcodes
+
+## HIPAA Compliance
+This pipeline follows HIPAA Safe Harbor method by removing
+7 out of 18 required patient identifiers.
 
 ## Week 1 - Completed
 - Basic regex redaction
@@ -36,18 +60,19 @@ patient information from clinical notes.
 - Combined redactor and pseudonymizer
 - Tested with multiple patients
 
-## Week 4 - In Progress
+## Week 4 - Completed
 - Created final report file
 - Added pipeline timing and speed measurement
 - Added HIPAA Safe Harbor 18 identifiers list
 - Added speed test results to report
+- Added error handling to pipeline
+- Added logging to pipeline
+- Added more test cases
+- Added risk assessment to report
+- Added HIPAA compliance section to report
+- Added conclusion to report
+- Final cleanup of all files
 
-## Project Files
-- PRO 2.py - Main redaction pipeline
-- pseudonymizer.py - Fake name generator and mapper
-- report.md - Final HIPAA compliance report
-- README.md - Project documentation 
-
-## Made by
+## Made By
 Krish Kanani
-Internship Project - CS Infotact
+Internship Project - CS Infotact Solutions
