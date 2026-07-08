@@ -1,4 +1,6 @@
 # PHI/PII Redaction Pipeline - Final Report
+Internship Project - CS Infotact Solutions
+Made by: Krish Kanani
 
 ## Project Overview
 This project builds an automated redaction pipeline for healthcare data.
@@ -11,7 +13,7 @@ Sending unredacted patient data to external AI APIs is illegal.
 This pipeline solves that problem by automatically cleaning the data first.
 
 ## Solution
-We built a two-step pipeline:
+We built a two step pipeline:
 - Step 1: Detect and hide sensitive data using Regex patterns
 - Step 2: Replace real names with fake names using Pseudonymization
 
@@ -19,6 +21,9 @@ We built a two-step pipeline:
 - Python
 - Regex (re library)
 - Random (for fake name generation)
+- Logging (for audit trail)
+- Time (for speed measurement)
+
 ## HIPAA Safe Harbor - 18 Identifiers
 
 HIPAA law says these 18 items must be removed from patient data:
@@ -50,20 +55,16 @@ HIPAA law says these 18 items must be removed from patient data:
 - Email Addresses ✅
 - SSN ✅
 - Medical Record Numbers ✅
-## Pipeline Speed Test
 
-We tested the pipeline speed on 3 clinical notes.
+## Pipeline Speed Test
+We tested the pipeline speed on multiple clinical notes.
 The pipeline processes each note in milliseconds.
-This is fast enough for real-time clinical use.
+This is fast enough for real time clinical use.
 
 ### Speed Test Results
 - Note 1 (Patient John Smith): processed in < 1 millisecond
 - Note 2 (Patient Sarah Johnson): processed in < 1 millisecond
 - Note 3 (Full Pipeline Test): processed in < 1 millisecond
-
-### Conclusion
-The pipeline is fast enough to be used in real healthcare 
-systems without causing delays for doctors or clinical staff.
 
 ## Risk Assessment
 
@@ -108,15 +109,10 @@ the data is considered safe to use.
 | Remove addresses | ✅ Replaced with [ADDRESS] |
 | Remove medical record numbers | ✅ Replaced with [MEDICAL_RECORD] |
 
-### Conclusion
-Our pipeline successfully removes 7 out of 18 HIPAA 
-Safe Harbor identifiers. This makes the data significantly 
-safer to send to external AI systems.
-
 ## Conclusion
 
 ### What We Built
-We successfully built a two-step PHI/PII redaction pipeline 
+We successfully built a two step PHI/PII redaction pipeline 
 that protects patient data before sending to external AI systems.
 
 ### Key Achievements
@@ -125,6 +121,7 @@ that protects patient data before sending to external AI systems.
 - Pipeline processes notes in less than 1 millisecond
 - Covers 7 out of 18 HIPAA Safe Harbor identifiers
 - System is fully reversible - original data can be restored
+- Added error handling and logging for production use
 
 ### What We Learned
 - Healthcare data requires multiple layers of protection
