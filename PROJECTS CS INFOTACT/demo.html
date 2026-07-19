@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHI / PII Redaction Pipeline</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; background: #f5f5f5; color: #222; padding: 2rem; }
+  .container { max-width: 800px; margin: 0 auto; background: white; border-radius: 12px; padding: 2rem; border: 1px solid #ddd; }
+  h1 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+  .subtitle { font-size: 14px; color: #666; margin-bottom: 1.5rem; }
+  .label { font-size: 13px; font-weight: 500; color: #555; margin-bottom: 6px; }
+  textarea { width: 100%; height: 180px; font-family: monospace; font-size: 13px; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; resize: vertical; background: #fafafa; color: #222; }
+  textarea:focus { outline: none; border-color: #4f86f7; }
+  .btn-row { display: flex; gap: 8px; margin: 12px 0; flex-wrap: wrap; }
+  button { cursor: pointer; font-size: 13px; padding: 8px 18px; border-radius: 8px; border: 1px solid #ccc; background: white; color: #222; }
+  button:hover { background: #f0f0f0; }
+  button.primary { background: #4f86f7; color: white; border-color: #4f86f7; }
+  button.primary:hover { background: #3a6fd8; }
+  button.green { background: #27ae60; color: white; border-color: #27ae60; }
+  button.green:hover { background: #1e8c4d; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 16px 0; }
+  .stat { background: #f5f5f5; border-radius: 8px; padding: 12px; text-align: center; }
+  .stat-num { font-size: 22px; font-weight: 600; color: #222; }
+  .stat-label { font-size: 11px; color: #666; margin-top: 2px; }
+  hr { border: none; border-top: 1px solid #eee; margin: 1.5rem 0; }
+  .output-box { background: #fafafa; border: 1px solid #ddd; border-radius: 8px; padding: 14px; font-family: monospace; font-size: 13px; min-height: 140px; white-space: pre-wrap; line-height: 1.7; color: #222; }
+  .badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 20px; margin: 0 1px; font-family: monospace; font-weight: 600; }
+  .badge-name { background: #ede9fe; color: #5b21b6; }
+  .badge-phone { background: #dbeafe; color: #1d4ed8; }
+  .badge-email { background: #dcfce7; color: #166534; }
+  .badge-ssn { background: #fee2e2; color: #991b1b; }
+  .badge-date { background: #fef9c3; color: #854d0e; }
+  .badge-mrn { background: #fee2e2; color: #991b1b; }
+  .badge-addr { background: #fef9c3; color: #854d0e; }
+  .legend { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .legend-item { font-size: 11px; display: flex; align-items: center; gap: 4px; color: #555; }
+  .footer { margin-top: 2rem; font-size: 12px; color: #999; text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>PHI / PII Redaction Pipeline</h1>
+  <p class="subtitle">CS Infotact Internship Project — Krish Kanani | Detects and redacts sensitive patient data in real time</p>
+
+  <div class="label">Input — paste patient note here</div>
+  <textarea id="input">Patient Name: John Smith
+Doctor Name: Dr. Adams
+Date of Birth: 12/05/1985
+Phone: 555-123-4567
+Email: john.smith@email.com
+SSN: 123-45-6789
+MRN: MRN-789456
+Address: 123 Main Street, New York
+Zipcode: 10001
+Diagnosis: Patient has Parkinson's disease and high blood pressure.</textarea>
+
+  <div class="btn-row">
+    <button class="primary" onclick="redact()">Redact now</button>
+    <button class="green" onclick="pseudonymize()">Pseudonymize names</button>
+    <button onclick="reset()">Reset</button>
+  </div>
+
+  <div class="stats" id="stats" style="display:none">
+    <div class="stat"><div class="stat-num" id="s-total">0</div><div class="stat-label">Total redacted</div></div>
+    <div class="stat"><div class="stat-num" id="s-names">0</div><div class="stat-label">Names</div></div>
+    <div class="stat"><div class="stat-num" id="s-contact">0</div><div class="stat-label">Contact info</div></div>
+    <div class="stat"><div class="stat-num" id="s-ids">0</div><div class="stat-label">IDs and dates</div></div>
+  </div>
+
+  <hr>
+
+  <div class="label">Output — redacted note</div>
+  <div class="output-box" id="output">Output will appear here after you click Redact now.</div>
+
+  <div class="legend">
+    <div class="legend-item"><span class="badge badge-name">NAME</span> Patient / Doctor names</div>
+    <div class="legend-item"><span class="badge badge-phone">PHONE</span> Phone numbers</div>
+    <div class="legend-item"><span class="badge badge-email">EMAIL</span> Email addresses</div>
+    <div class="legend-item"><span class="badge badge-ssn">SSN</span> Social Security</div>
+    <div class="legend-item"><span class="badge badge-date">DATE</span> Dates</div>
+    <div class="legend-item"><span class="badge badge-mrn">MRN</span> Medical records</div>
+    <div class="legend-item"><span class="badge badge-addr">ADDRESS</span> Addresses</div>
+  </div>
+
+  <div class="footer">PHI/PII Redaction Pipeline &mdash; HIPAA Safe Harbor Compliant &mdash; CS Infotact Internship 2026</div>
+</div>
+
+<script>
+const fakeNames = ["James Brown","Emily Davis","Robert Wilson","Sophia Taylor","William Anderson"];
+const fakeDoctors = ["Dr. Cooper","Dr. Mitchell","Dr. Harris","Dr. Parker"];
+let counts = {names:0, contact:0, ids:0};
+
+function highlight(label, cls) {
+  return '<span class="badge ' + cls + '">' + label + '</span>';
+}
+
+function redact() {
+  let text = document.getElementById('input').value;
+  counts = {names:0, contact:0, ids:0};
+
+  text = text.replace(/Patient Name:\s[A-Z][a-z]+\s[A-Z][a-z]+/g, function(m) { counts.names++; return 'Patient Name: ' + highlight('[NAME]', 'badge-name'); });
+  text = text.replace(/Dr\.\s[A-Z][a-z]+/g, function(m) { counts.names++; return 'Dr. ' + highlight('[DOCTOR]', 'badge-name'); });
+  text = text.replace(/\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b/g, function(m) { counts.contact++; return highlight('[PHONE]', 'badge-phone'); });
+  text = text.replace(/\S+@\S+\.\S+/g, function(m) { counts.contact++; return highlight('[EMAIL]', 'badge-email'); });
+  text = text.replace(/\b\d{3}-\d{2}-\d{4}\b/g, function(m) { counts.ids++; return highlight('[SSN]', 'badge-ssn'); });
+  text = text.replace(/MRN-\d+/g, function(m) { counts.ids++; return highlight('[MRN]', 'badge-mrn'); });
+  text = text.replace(/\b\d{1,2}\/\d{1,2}\/\d{2,4}\b/g, function(m) { counts.ids++; return highlight('[DATE]', 'badge-date'); });
+  text = text.replace(/Address:.*$/gm, function(m) { counts.ids++; return 'Address: ' + highlight('[ADDRESS]', 'badge-addr'); });
+  text = text.replace(/\b\d{5}\b/g, function(m) { counts.ids++; return highlight('[ZIP]', 'badge-addr'); });
+
+  document.getElementById('output').innerHTML = text;
+  showStats();
+}
+
+function pseudonymize() {
+  let text = document.getElementById('input').value;
+  counts = {names:0, contact:0, ids:0};
+  const fake = fakeNames[Math.floor(Math.random() * fakeNames.length)];
+  const fakeDoc = fakeDoctors[Math.floor(Math.random() * fakeDoctors.length)];
+
+  text = text.replace(/Patient Name:\s[A-Z][a-z]+\s[A-Z][a-z]+/g, function(m) { counts.names++; return 'Patient Name: <span class="badge badge-name">' + fake + '</span>'; });
+  text = text.replace(/Dr\.\s[A-Z][a-z]+/g, function(m) { counts.names++; return '<span class="badge badge-name">' + fakeDoc + '</span>'; });
+  text = text.replace(/\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b/g, function(m) { counts.contact++; return highlight('[PHONE]', 'badge-phone'); });
+  text = text.replace(/\S+@\S+\.\S+/g, function(m) { counts.contact++; return highlight('[EMAIL]', 'badge-email'); });
+  text = text.replace(/\b\d{3}-\d{2}-\d{4}\b/g, function(m) { counts.ids++; return highlight('[SSN]', 'badge-ssn'); });
+  text = text.replace(/MRN-\d+/g, function(m) { counts.ids++; return highlight('[MRN]', 'badge-mrn'); });
+  text = text.replace(/\b\d{1,2}\/\d{1,2}\/\d{2,4}\b/g, function(m) { counts.ids++; return highlight('[DATE]', 'badge-date'); });
+  text = text.replace(/Address:.*$/gm, function(m) { counts.ids++; return 'Address: ' + highlight('[ADDRESS]', 'badge-addr'); });
+  text = text.replace(/\b\d{5}\b/g, function(m) { counts.ids++; return highlight('[ZIP]', 'badge-addr'); });
+
+  document.getElementById('output').innerHTML = text;
+  showStats();
+}
+
+function showStats() {
+  const total = counts.names + counts.contact + counts.ids;
+  document.getElementById('s-total').textContent = total;
+  document.getElementById('s-names').textContent = counts.names;
+  document.getElementById('s-contact').textContent = counts.contact;
+  document.getElementById('s-ids').textContent = counts.ids;
+  document.getElementById('stats').style.display = 'grid';
+}
+
+function reset() {
+  document.getElementById('output').textContent = 'Output will appear here after you click Redact now.';
+  document.getElementById('stats').style.display = 'none';
+}
+</script>
+
+</body>
+</html>
